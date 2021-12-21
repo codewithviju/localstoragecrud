@@ -1,5 +1,5 @@
 let id = "no";
-
+let selectedValue = [];
 selectData();
 function manageData() {
   let stname = document.getElementById("stname").value;
@@ -27,8 +27,8 @@ function manageData() {
     stgender: gender,
   };
 
-  if (stname && stemail && stphone && stage && stdate == "") {
-    alert("All Field Are Required");
+  if (stname == "") {
+    document.getElementById("nameerror").innerHTML = "Please Enter Your Name";
   } else {
     if (id == "no") {
       let arr = getCrudData();
@@ -39,7 +39,7 @@ function manageData() {
         arr.push(obj);
         setCrudData(arr);
       }
-      alert("data Added");
+      alert("Student Added Successfully");
 
       window.location.reload();
     } else {
@@ -51,14 +51,9 @@ function manageData() {
       arr[id].stdate = stdate;
       arr[id].stgender = gender;
       setCrudData(arr);
-      alert("Data Updated");
+      alert("Student Data Updated");
 
-      document.getElementById("stname").value = "";
-      document.getElementById("stemail").value = "";
-      document.getElementById("stphone").value = "";
-      document.getElementById("stage").value = "";
-      document.getElementById("stdate").value = "";
-      document.getElementById("stgender").value = "";
+      window.location.reload();
     }
 
     selectData();
@@ -73,7 +68,7 @@ function selectData() {
     for (let k in arr) {
       html =
         html +
-        `<tr><td> <input type="checkbox">  </td><td>${sno}</td><td>${arr[k].stname}</td><td>${arr[k].stemail} </td><td>${arr[k].stphone} </td><td>${arr[k].stage} </td><td>${arr[k].stdate} </td><td>${arr[k].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${k})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${k})">Delete</a></td></tr>`;
+        `<tr><td> <input type="checkbox" onchange="enableButton()">  </td><td>${sno}</td><td>${arr[k].stname}</td><td>${arr[k].stemail} </td><td>${arr[k].stphone} </td><td>${arr[k].stage} </td><td>${arr[k].stdate} </td><td>${arr[k].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${k})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${k})">Delete</a></td></tr>`;
       sno++;
     }
     document.getElementById("root").innerHTML = html;
@@ -119,14 +114,18 @@ function searchData() {
     let html = "";
     let arr = getCrudData();
     let sno = 1;
-    const answer = arr.filter((student) => student.stname === getValue);
+
+    const answer = arr.filter(
+      (student) => student.stname && student.stemail == getValue
+    );
+
     if (answer == "") {
       html = html + `${getValue} Not Found`;
     }
     for (i in answer) {
       html =
         html +
-        `<tr><td> <input type="checkbox"> </td><td> ${sno} </td><td> ${answer[i].stname} </td><td>${answer[i].stemail} </td><td>${answer[i].stphone} </td><td>${answer[i].stage} </td><td>${answer[i].stdate} </td><td>${answer[i].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${i})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${i})">Delete</a></td></tr>`;
+        `<tr><td> <input type="checkbox" > </td><td> ${sno} </td><td> ${answer[i].stname} </td><td>${answer[i].stemail} </td><td>${answer[i].stphone} </td><td>${answer[i].stage} </td><td>${answer[i].stdate} </td><td>${answer[i].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${i})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${i})">Delete</a></td></tr>`;
       sno++;
     }
 
@@ -158,4 +157,12 @@ function clearForm() {
   document.getElementById("stdate").value = "";
 
   window.location.reload();
+}
+
+function enableButton() {
+  document.getElementById("deleteButton").style.display = "block";
+}
+
+function deleteRecords(value) {
+  console.log(value);
 }

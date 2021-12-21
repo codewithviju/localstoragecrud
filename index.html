@@ -34,7 +34,7 @@
                       autocomplete="off"
                     />
                   </div>
-                  <span id="nameerror"></span>
+                  <span id="nameerror" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
@@ -48,7 +48,7 @@
                       autocomplete="off"
                     />
                   </div>
-                  <span id="emailerror"></span>
+                  <span id="emailerror" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
@@ -63,7 +63,7 @@
                       autocomplete="off"
                     />
                   </div>
-                  <span id="phoneerror"></span>
+                  <span id="phoneerror" class="text-danger"></span>
                 </div>
                 <div class="mb-3">
                   <div class="mb-3">
@@ -76,7 +76,7 @@
                       autocomplete="off"
                     />
                   </div>
-                  <span id="ageerror"></span>
+                  <span id="ageerror" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
@@ -89,7 +89,7 @@
                       name="stdate"
                     />
                   </div>
-                  <span id="dateerror"></span>
+                  <span id="dateerror" class="text-danger"></span>
                 </div>
 
                 <div class="mb-3">
@@ -160,9 +160,12 @@
             Clear
           </button>
 
+          <button class="btn btn-danger" onclick="deleteRecords(${k})" id="deleteButton" style="display: none;">Delete</button>
+
           <table class="table">
             <thead>
               <tr>
+                <th></th>
                 <th scope="col">ID</th>
                 <th scope="col">NAME</th>
                 <th scope="col">EMAIL</th>
@@ -178,7 +181,10 @@
         </div>
       </div>
     </div>
-
+   
     <script src="main.js"></script>
+
+
+    
   </body>
 </html>
