@@ -115,9 +115,13 @@ function searchData() {
     let arr = getCrudData();
     let sno = 1;
 
-    const answer = arr.filter(
-      (student) => student.stname && student.stemail == getValue
-    );
+    const answer = arr
+      .map((items) => {
+        return items;
+      })
+      .filter((items) => {
+        return items.stname === getValue;
+      });
 
     if (answer == "") {
       html = html + `${getValue} Not Found`;

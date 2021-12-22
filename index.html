@@ -137,7 +137,12 @@
                   onclick="manageData()"
                 />
 
-                <input type="button" class="btn btn-danger" onclick="clearForm()" value="Clear">
+                <input
+                  type="button"
+                  class="btn btn-danger"
+                  onclick="clearForm()"
+                  value="Clear"
+                />
               </form>
             </div>
           </div>
@@ -153,14 +158,16 @@
           />
 
           <button class="btn btn-primary" onclick="searchData()">Search</button>
-          <button
-            class="btn btn-success"
-            onclick="pageReload()"
-          />
-            Clear
-          </button>
+          <button class="btn btn-success" onclick="pageReload()">Clear</button>
 
-          <button class="btn btn-danger" onclick="deleteRecords(${k})" id="deleteButton" style="display: none;">Delete</button>
+          <button
+            class="btn btn-danger"
+            onclick="deleteRecords()"
+            id="deleteButton"
+            style="display: none"
+          >
+            Delete
+          </button>
 
           <table class="table">
             <thead>
@@ -181,10 +188,7 @@
         </div>
       </div>
     </div>
-   
+
     <script src="main.js"></script>
-
-
-    
   </body>
 </html>
