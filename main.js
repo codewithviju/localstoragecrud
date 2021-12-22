@@ -68,7 +68,7 @@ function selectData() {
     for (let k in arr) {
       html =
         html +
-        `<tr><td> <input type="checkbox" onchange="enableButton()">  </td><td>${sno}</td><td>${arr[k].stname}</td><td>${arr[k].stemail} </td><td>${arr[k].stphone} </td><td>${arr[k].stage} </td><td>${arr[k].stdate} </td><td>${arr[k].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${k})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${k})">Delete</a></td></tr>`;
+        `<tr><td> <input type="checkbox" onchange="enableButton(${k})">  </td><td>${sno}</td><td>${arr[k].stname}</td><td>${arr[k].stemail} </td><td>${arr[k].stphone} </td><td>${arr[k].stage} </td><td>${arr[k].stdate} </td><td>${arr[k].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${k})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${k})">Delete</a></td></tr>`;
       sno++;
     }
     document.getElementById("root").innerHTML = html;
@@ -115,16 +115,15 @@ function searchData() {
     let arr = getCrudData();
     let sno = 1;
 
-    const answer = arr
-      .map((items) => {
-        return items;
-      })
-      .filter((items) => {
-        return items.stname === getValue;
-      });
+    const answer = arr.filter(
+      (items) =>
+        items.stname.includes(getValue) ||
+        items.stemail.includes(getValue) ||
+        items.stphone.includes(getValue)
+    );
 
     if (answer == "") {
-      html = html + `${getValue} Not Found`;
+      html = html + `${getValue} Not Found in Name, Email Or Phone Number`;
     }
     for (i in answer) {
       html =
@@ -162,11 +161,22 @@ function clearForm() {
 
   window.location.reload();
 }
-
-function enableButton() {
+let totalValues = [];
+function enableButton(value) {
   document.getElementById("deleteButton").style.display = "block";
+
+  totalValues = [...totalValues, value];
+  console.log(totalValues);
 }
 
-function deleteRecords(value) {
-  console.log(value);
+function deleteRecords() {
+  if (window.confirm("Are You Sure You Want To Delete?")) {
+    let arr = getCrudData();
+
+    for (i = totalValues.length - 1; i >= 0; i--) {
+      arr.splice(totalValues[i], 1);
+    }
+    setCrudData(arr);
+    selectData();
+  }
 }
