@@ -226,3 +226,33 @@ function ascending() {
 
   document.getElementById("root").innerHTML = html;
 }
+
+// Ascending Mobile Number
+
+function ascendingPhoneNumber() {
+  let html = "";
+  let arr = getCrudData();
+  let sno = 1;
+
+  if (document.getElementById("ascphone").checked === true) {
+    const order = arr.sort(function (a, b) {
+      return a.stphone - b.stphone;
+    });
+    for (i in order) {
+      html =
+        html +
+        `<tr><td> <input type="checkbox" > </td><td> ${sno} </td><td> ${order[i].stname} </td><td>${order[i].stemail} </td><td>${order[i].stphone} </td><td>${order[i].stage} </td><td>${order[i].stdate} </td><td>${order[i].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${i})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${i})">Delete</a></td></tr>`;
+      sno++;
+    }
+  }
+  if (document.getElementById("ascphone").checked === false) {
+    for (let k in arr) {
+      html =
+        html +
+        `<tr><td> <input type="checkbox" onchange="enableButton(${k})">  </td><td>${sno}</td><td>${arr[k].stname}</td><td>${arr[k].stemail} </td><td>${arr[k].stphone} </td><td>${arr[k].stage} </td><td>${arr[k].stdate} </td><td>${arr[k].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${k})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${k})">Delete</a></td></tr>`;
+      sno++;
+    }
+  }
+
+  document.getElementById("root").innerHTML = html;
+}
