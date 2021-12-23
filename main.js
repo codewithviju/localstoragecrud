@@ -60,6 +60,8 @@ function manageData() {
   }
 }
 
+// Select Records
+
 function selectData() {
   let arr = getCrudData();
   if (arr != null) {
@@ -75,6 +77,8 @@ function selectData() {
   }
 }
 
+// Edit Records
+
 function editData(rid) {
   id = rid;
   let arr = getCrudData();
@@ -85,6 +89,8 @@ function editData(rid) {
   document.getElementById("stdate").value = arr[rid].stdate;
 }
 
+// Delete Single Records
+
 function deleteData(rid) {
   if (window.confirm("Are You Sure You Want To Delete?")) {
     let arr = getCrudData();
@@ -94,16 +100,20 @@ function deleteData(rid) {
   }
 }
 
+// To Get Data From Localstorage
+
 function getCrudData() {
   let arr = JSON.parse(localStorage.getItem("crud"));
   return arr;
 }
 
+// Set Data in LocalStorage Using Objects
+
 function setCrudData(arr) {
   localStorage.setItem("crud", JSON.stringify(arr));
 }
 
-// For Searching
+// For Searching Info
 
 function searchData() {
   let getValue = document.getElementById("searchBox").value;
@@ -150,7 +160,7 @@ function pageReload() {
   window.location.reload();
 }
 
-// To Clear From
+// To Clear Form When User Click on Clear Button
 
 function clearForm() {
   document.getElementById("stname").value = "";
@@ -169,6 +179,8 @@ function enableButton(value) {
   console.log(totalValues);
 }
 
+// For Delete Multiple Checked Records
+
 function deleteRecords() {
   if (window.confirm("Are You Sure You Want To Delete?")) {
     let arr = getCrudData();
@@ -179,4 +191,38 @@ function deleteRecords() {
     setCrudData(arr);
     selectData();
   }
+}
+
+// For Ascending Order
+
+function ascending() {
+  let html = "";
+  let arr = getCrudData();
+  let sno = 1;
+
+  if (document.getElementById("asc").checked === true) {
+    const order = arr.sort(function (a, b) {
+      if (a.stname > b.stname) {
+        return 1;
+      } else {
+        return -1;
+      }
+    });
+    for (i in order) {
+      html =
+        html +
+        `<tr><td> <input type="checkbox" > </td><td> ${sno} </td><td> ${order[i].stname} </td><td>${order[i].stemail} </td><td>${order[i].stphone} </td><td>${order[i].stage} </td><td>${order[i].stdate} </td><td>${order[i].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${i})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${i})">Delete</a></td></tr>`;
+      sno++;
+    }
+  }
+  if (document.getElementById("asc").checked === false) {
+    for (let k in arr) {
+      html =
+        html +
+        `<tr><td> <input type="checkbox" onchange="enableButton(${k})">  </td><td>${sno}</td><td>${arr[k].stname}</td><td>${arr[k].stemail} </td><td>${arr[k].stphone} </td><td>${arr[k].stage} </td><td>${arr[k].stdate} </td><td>${arr[k].stgender} </td><td><a href="javascript:void(0)" onclick="editData(${k})" class="btn btn-success">Edit</a>&nbsp;<a href="javascript:void(0)" class="btn btn-danger" onclick="deleteData(${k})">Delete</a></td></tr>`;
+      sno++;
+    }
+  }
+
+  document.getElementById("root").innerHTML = html;
 }
